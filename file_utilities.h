@@ -39,7 +39,7 @@ public:
 		QString sTxt;
 		try{
 			QTextStream ts(&xIO);
-			if(!sCodec.isEmpty() && sCodec!="System") ts.setCodec(sCodec.toStdString().c_str());
+			if(!sCodec.isEmpty() && sCodec!="System") ts.setEncoding(QStringConverter::Latin1);
 			sTxt=ts.readAll();
 		}catch(...){
 			qDebug() << "**Error loading text. sCodec=" << sCodec;
@@ -83,7 +83,7 @@ public:
 		bool bSucc=false;
 		try{
 			QTextStream ts(&xIO);
-			if(!sCodec.isEmpty()) ts.setCodec(sCodec.toStdString().c_str());
+			if(!sCodec.isEmpty()) ts.setEncoding(QStringConverter::Latin1);
 			ts << sTxt;
 			bSucc=true;
 		}catch(...){

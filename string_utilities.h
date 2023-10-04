@@ -27,12 +27,12 @@ class _CTextSplitter : public QStringList{
 private:
 
 	QString				m_sSeparator;
-	QString::SplitBehavior		m_iBehavior;
+    Qt::SplitBehavior		m_iBehavior;
 	Qt::CaseSensitivity		m_iCase;
 
 public:
 
-	_CTextSplitter(const QString& sTxt, const QString& sSep, QString::SplitBehavior behavior = QString::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+    _CTextSplitter(const QString& sTxt, const QString& sSep, Qt::SplitBehavior behavior = Qt::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive)
 		: m_sSeparator(sSep)
 		, m_iBehavior(behavior)
 		, m_iCase(cs)
@@ -40,7 +40,7 @@ public:
 		*this=sTxt;
 	}
 
-	_CTextSplitter(const QStringList& vSrc, const QString& sSep, QString::SplitBehavior behavior = QString::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive)
+    _CTextSplitter(const QStringList& vSrc, const QString& sSep, Qt::SplitBehavior behavior = Qt::KeepEmptyParts, Qt::CaseSensitivity cs = Qt::CaseSensitive)
 		: m_sSeparator(sSep)
 		, m_iBehavior(behavior)
 		, m_iCase(cs)
@@ -120,7 +120,7 @@ private:
 		int nDone=0;
 //		qDebug() << "->_CKeyValEntries::_unserialize(nTxtLen=" << sTxt.size() << ")";
 		QString sEOL=m_sEOL; if(sEOL.isEmpty()) sEOL="\n";
-		QStringList vLines=sTxt.split(sEOL, QString::SkipEmptyParts);
+        QStringList vLines=sTxt.split(sEOL, Qt::SkipEmptyParts);
 		QStringList::const_iterator it;
 		for(it=vLines.begin(); it!=vLines.end(); ++it){
 			QString sLine=*it;
@@ -135,7 +135,7 @@ private:
 		return nDone;
 	}
 
-	QString _serialize(void)const
+    QString Serialize() const
 	{
 		QString sRes;
 		QString sEOL=m_sEOL; if(sEOL.isEmpty()) sEOL=_END_OF_LINE;
@@ -156,7 +156,7 @@ public:
 	}
 
 	int operator=(const QString& sTxt){return _unserialize(sTxt);}
-	operator QString()const{return _serialize();}
+    operator QString()const{return Serialize();}
 
 	QString operator()(const QString& sKey, const QString& sDef="")const
 	{

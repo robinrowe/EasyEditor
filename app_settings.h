@@ -6,7 +6,7 @@
 #include <iterator>
 
 #include <QApplication>
-#include <QDesktopWidget>
+//#include <QDesktopWidget>
 #include <QDir>
 #include <QAction>
 #include <QString>

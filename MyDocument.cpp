@@ -1,3 +1,5 @@
+#include <QRegExp>
+#include <QString>
 #include "common_headers.h"
 #include "MyRichEdit.h"
 #include "MyDocument.h"
@@ -54,7 +56,7 @@ void _CTextImage::_unserialize(const QDomElement& xDomEle)
 	}
 }
 
-void _CTextImage::_serialize(QDomElement& xDomEle) const
+void _CTextImage::Serialize(QDomElement& xDomEle) const
 {
 	if(xDomEle.tagName() == "imgres"){
 		xDomEle.setAttribute("scaleX", m_nScaleX);

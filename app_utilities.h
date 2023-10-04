@@ -17,7 +17,8 @@
 #include <QDateTime>
 #include <QFontDialog>
 #include <QColorDialog>
-#include <QDesktopWidget>
+// Use QGuiApplication::screens to get a list of QScreen objects.
+//#include <QDesktopWidget>
 #include <QTreeWidget>
 #include <QListWidget>
 #include <QTableWidget>
@@ -25,16 +26,16 @@
 #include <QLayout>
 #include <QLayoutItem>
 #include <QApplication>
-
+#include <QRandomGenerator>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomNodeList>
 #include <QtXml/QDomElement>
-
 #include <QSvgRenderer>
+#include <QScreen>
 
-#include "type_defs.h"
+//#include "type_defs.h"
 #include "string_utilities.h"
-#include "cpp_utilities.h"
+//#include "cpp_utilities.h"
 
 ///////////////////////////////////////////////////////////
 
@@ -103,7 +104,7 @@ public:
 			QString sName=QString("%1%2_%3.%4")
 					.arg(sPre)
 					.arg(time(NULL), 0, 16)
-					.arg(qrand(), 0, 16)
+                    .arg(QRandomGenerator::global()->generate(), 0, 16)
 					.arg(sSuf)
 					;
 			QFileInfo f(m_sTmpDir, sName);
@@ -357,7 +358,7 @@ public:
 			if(chSep!=_CHAR_SLASH) sPath.replace(_CHAR_SLASH, chSep);
 			if(chSep!=_CHAR_BACKSLASH) sPath.replace(_CHAR_BACKSLASH, chSep);
 
-			_CTextSplitter v(sPath, chSep, QString::SkipEmptyParts);
+			_CTextSplitter v(sPath, chSep, Qt::SkipEmptyParts);
 			if(!v.isEmpty()){
 				//2014.4.4 consider of relative paths, like this: './abc/def/./hij/..'
 				bool bRelative=(v[0]==".");
@@ -401,8 +402,8 @@ public:
 
 		QChar chSep=_CHAR_SLASH;
 
-		_CTextSplitter vParent(qualifyFilePath(sPath0, chSep), chSep, QString::SkipEmptyParts);
-		_CTextSplitter vChild(qualifyFilePath(sPath1, chSep), chSep, QString::SkipEmptyParts);
+		_CTextSplitter vParent(qualifyFilePath(sPath0, chSep), chSep, Qt::SkipEmptyParts);
+		_CTextSplitter vChild(qualifyFilePath(sPath1, chSep), chSep, Qt::SkipEmptyParts);
 
 		if(vChild.size() != vParent.size() + 1){
 			return false;
@@ -432,8 +433,8 @@ public:
 
 		QChar chSep=_CHAR_SLASH;
 
-		_CTextSplitter vAnce(qualifyFilePath(sPath0, chSep), chSep, QString::SkipEmptyParts);
-		_CTextSplitter vDesc(qualifyFilePath(sPath1, chSep), chSep, QString::SkipEmptyParts);
+		_CTextSplitter vAnce(qualifyFilePath(sPath0, chSep), chSep, Qt::SkipEmptyParts);
+		_CTextSplitter vDesc(qualifyFilePath(sPath1, chSep), chSep, Qt::SkipEmptyParts);
 
 		if(vAnce.size() >= vDesc.size()){
 			return false;
@@ -463,8 +464,8 @@ public:
 
 		QChar chSep=_CHAR_SLASH;
 
-		_CTextSplitter v0(qualifyFilePath(sPath0, chSep), chSep, QString::SkipEmptyParts);
-		_CTextSplitter v1(qualifyFilePath(sPath1, chSep), chSep, QString::SkipEmptyParts);
+        _CTextSplitter v0(qualifyFilePath(sPath0, chSep), chSep, Qt::SkipEmptyParts);
+        _CTextSplitter v1(qualifyFilePath(sPath1, chSep), chSep, Qt::SkipEmptyParts);
 
 		if(v1.size() != v0.size())
 		{
@@ -590,7 +591,7 @@ protected:
 			//s=t.toString(Qt::TextDate); //that's: 23:59:58;
 			s = t.toString("hh:mm"); //we need 23:59;
 		}else{
-			s = d.toString(Qt::DefaultLocaleShortDate);
+            s = d.toString(QLocale::system().toString(QDateTime::currentDateTime(), QLocale::ShortFormat));
 		}
 		return s;
 	}
@@ -781,8 +782,8 @@ public:
 
 		bool bResizeWidth = false;
 		bool bResizeHeight = false;
-
-		QRect rtScreen = QApplication::desktop()->availableGeometry();
+        QScreen* screen = QGuiApplication::primaryScreen();
+        QRect rtScreen = screen->availableGeometry();
 		int w = (nWidth > 0.0) ? (int)((double)(rtScreen.width()) * nWidth) : pWidget->sizeHint().width();
 		int h = (nHeight > 0.0) ? (int)((double)(rtScreen.height()) * nHeight) : pWidget->sizeHint().height();
 

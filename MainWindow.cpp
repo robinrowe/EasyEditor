@@ -13,6 +13,8 @@
 
 #include "MainWindow.h"
 
+static QFileDialog::Options fdo;
+
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, m_pCurrentEdit(NULL)
@@ -935,7 +937,7 @@ bool MainWindow::saveFile(int nIndex)
 				, g_xOpt.m_sPathToOpenFile.isEmpty() ? QDir::homePath() : g_xOpt.m_sPathToOpenFile
 				, "Extended Rich Text (*.htmlx);;All files (*.*)"
 				, NULL
-				, 0
+                , fdo
 			);
 			if(!sFn.isEmpty()){
 				pRichEdit->setFilePath(sFn);
@@ -1095,7 +1097,7 @@ void MainWindow::onOpenFile()
 			, g_xOpt.m_sPathToOpenFile.isEmpty() ? QDir::homePath() : g_xOpt.m_sPathToOpenFile
 			, "Extended Rich Text (*.htmlx);;Hypertext (*.html *.htm);;All files (*.*)"
 			, NULL
-			, 0
+            , fdo
 	);
 	Q_FOREACH(QString sFilePath, vFiles){
 		g_xOpt.m_sPathToOpenFile = QFileInfo(sFilePath).dir().absolutePath();
@@ -1117,7 +1119,7 @@ void MainWindow::onExportAsHtml()
 			, g_xOpt.m_sPathToExportFile.isEmpty() ? QDir::homePath() : g_xOpt.m_sPathToExportFile
 			, "Hypertext (*.html *.htm);;All files (*.*)"
 			, NULL
-			, 0
+            , fdo
 		);
 		if(!sFn.isEmpty()){
 			m_pCurrentEdit->exportAsHtml(sFn);
@@ -1135,7 +1137,7 @@ void MainWindow::onExportAsPdf()
 			, g_xOpt.m_sPathToExportFile.isEmpty() ? QDir::homePath() : g_xOpt.m_sPathToExportFile
 			, "Portable Document File (*.pdf);;All files (*.*)"
 			, NULL
-			, 0
+            , fdo
 		);
 		if(!sFn.isEmpty()){
 			m_pCurrentEdit->exportAsPdf(sFn);
@@ -1153,7 +1155,7 @@ void MainWindow::onExportAsText()
 			, g_xOpt.m_sPathToExportFile.isEmpty() ? QDir::homePath() : g_xOpt.m_sPathToExportFile
 			, "Plain Text Document (*.txt);;All files (*.*)"
 			, NULL
-			, 0
+            , fdo
 		);
 		if(!sFn.isEmpty()){
 			m_pCurrentEdit->exportAsPlainText(sFn);
@@ -1284,7 +1286,7 @@ void MainWindow::onInsertImage()
 						 , g_xOpt.m_sPathToInsImage.isEmpty() ? QDir::homePath() : g_xOpt.m_sPathToInsImage
 						 , "Images (*.png *.bmp *.jpeg *.jpg);;All files (*.*)"
 						 , NULL
-						 , 0
+                         , fdo
 						 );
 		if(!vFiles.isEmpty()){
 			g_xOpt.m_sPathToInsImage = QFileInfo(vFiles[0]).dir().absolutePath();
@@ -1309,7 +1311,7 @@ void MainWindow::onExportImage()
 			, g_xOpt.m_sPathToInsImage.isEmpty() ? QDir::homePath() : g_xOpt.m_sPathToInsImage
 			, "Portable Network Graphics (*.png);;Joint Photographic Experts Group (*.jpg; *jpeg);;Bitmap (*.bmp);;All files (*.*)"
 			, NULL
-			, 0
+            , fdo
 		);
 		if(!sFn.isEmpty()){
 			m_pCurrentEdit->exportSelectedImage(sFn);

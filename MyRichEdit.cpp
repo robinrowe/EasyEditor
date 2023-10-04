@@ -1,5 +1,6 @@
 #include <math.h>
 #include <QPrinter>
+#include <QRegExp>
 #include "common_headers.h"
 
 #include "MyRichEdit.h"
@@ -143,13 +144,18 @@ void _CMyRichEdit::exportAsPdf(const QString& sFn) const
 	//2018.2.4 Output format;
 	QPrinter::OutputFormat iFmt=QPrinter::PdfFormat;
 	//2018.2.4 Paper size;
-	QPrinter::PaperSize iPaper=QPrinter::A4;
+// bug:	QPrinter::PaperSize iPaper=QPrinter::A4;
 
 	QPrinter xPrinter(iMode);
 	xPrinter.setOutputFileName(sFn);
-	xPrinter.setPageMargins(10, 10, 10, 10, QPrinter::Millimeter);
+    QMarginsF m;
+    m.setBottom(10);
+    m.setLeft(10);
+    m.setRight(10);
+    m.setTop(10);
+    xPrinter.setPageMargins(m, QPageLayout::Millimeter);
 	xPrinter.setOutputFormat(iFmt);
-	xPrinter.setPaperSize(iPaper);
+// bug:	xPrinter.setPaperSize(iPaper);
 
 	m_pTextDocument->print(&xPrinter);
 }

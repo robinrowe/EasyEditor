@@ -4,11 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui xml svg printsupport
+QT       += core gui xml svg printsupport core5compat widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET = EasyEditor
+TARGET = EzEd
 TEMPLATE = app
 
 

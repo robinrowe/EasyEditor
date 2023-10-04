@@ -74,7 +74,7 @@ protected:
 	}
 
 	void _unserialize(const QDomElement& xDomEle);
-	void _serialize(QDomElement& xDomEle) const;
+	void Serialize(QDomElement& xDomEle) const;
 
 public:
 
@@ -118,7 +118,7 @@ public:
 		return (*this);
 	}
 	void operator=(const QDomElement& xDomEle){_unserialize(xDomEle);}
-	void constructDomElement(QDomElement& xDomEle) const {_serialize(xDomEle);}
+	void constructDomElement(QDomElement& xDomEle) const {Serialize(xDomEle);}
 	QTextImageFormat constructTextImageFmt() const;
 
 };

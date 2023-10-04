@@ -138,12 +138,23 @@ void iniGet(const _CKeyValEntries& xKV, const QString& sKey, QFont& xFont, const
 {
 	xFont = xDef;
 	if(!sKey.isEmpty()){
-		QString sFamily; iniGet(xKV, sKey+".FaceName", sFamily, xDef.family()); xFont.setFamily(sFamily);
-		double nSize; iniGet(xKV, sKey+".FontSize", nSize, xDef.pointSizeF()); xFont.setPointSizeF(nSize);
-		int nWeight; iniGet(xKV, sKey+".Weight", nWeight, xDef.weight()); xFont.setWeight(nWeight);
-		bool bItalic; iniGet(xKV, sKey+".Italic", bItalic, xDef.italic()); xFont.setItalic(bItalic);
-		bool bUnderline; iniGet(xKV, sKey+".Underline", bUnderline, xDef.underline()); xFont.setUnderline(bUnderline);
-		bool bStrikeOut; iniGet(xKV, sKey+".StrikeOut", bStrikeOut, xDef.strikeOut()); xFont.setStrikeOut(bStrikeOut);
+        QString sFamily; iniGet(xKV, sKey+".FaceName", sFamily, xDef.family());
+        xFont.setFamily(sFamily);
+        double nSize;
+        iniGet(xKV, sKey+".FontSize", nSize, xDef.pointSizeF());
+        xFont.setPointSizeF(nSize);
+        int nWeight; // 100 light to 900 dark
+        iniGet(xKV, sKey+".Weight", nWeight, xDef.weight());
+        xFont.setWeight((QFont::Weight) nWeight);
+        bool bItalic;
+        iniGet(xKV, sKey+".Italic", bItalic, xDef.italic());
+        xFont.setItalic(bItalic);
+        bool bUnderline;
+        iniGet(xKV, sKey+".Underline", bUnderline, xDef.underline());
+        xFont.setUnderline(bUnderline);
+        bool bStrikeOut;
+        iniGet(xKV, sKey+".StrikeOut", bStrikeOut, xDef.strikeOut());
+        xFont.setStrikeOut(bStrikeOut);
 	}
 }
 

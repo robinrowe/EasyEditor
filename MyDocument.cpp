@@ -29,10 +29,10 @@ void _CHighlighterOccurrence::highlightBlock(const QString& sText)
 		QString sTxt2Find = m_bUseRegExp ? m_sText2Find : QRegExp::escape(m_sText2Find);
 		Qt::CaseSensitivity iCase = m_bMatchCase ? Qt::CaseSensitive : Qt::CaseInsensitive;
 		QString sPattern = m_bMatchWholeWords ? QString("\\b%1\\b").arg(sTxt2Find) : sTxt2Find;
-		QRegExp xExp(sPattern, iCase);
-		int nIndex = sText.indexOf(xExp, 0);
+        QRegularExpression xExp(sPattern);//, iCase);
+        int nIndex = sText.indexOf(xExp, 0);
 		while(nIndex >= 0){
-			int nLength = xExp.matchedLength();
+            int nLength = xExp.captureCount();// .matchedLength();
 			if(nLength <= 0) break;
 
 			QSyntaxHighlighter::setFormat(nIndex, nLength, m_xFmtOccurrence);

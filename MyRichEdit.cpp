@@ -1093,7 +1093,7 @@ bool _CMyRichEdit::findNext(const QString& sText, bool bWrapsAround, bool bCaseS
 	if(!bMatchWholeWord) nFlags &= ~QTextDocument::FindWholeWords;
 	if(!bBackward) nFlags &= ~QTextDocument::FindBackward;
 
-	QRegExp xExp(bUseRegExp ? sText : QRegExp::escape(sText));
+    QRegularExpression xExp(bUseRegExp ? sText : QRegExp::escape(sText));
 	QTextCursor xTC = m_pTextDocument->find(xExp, QTextEdit::textCursor(), nFlags);
 
 	if(xTC.isNull() && bWrapsAround){
